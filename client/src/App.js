@@ -93,17 +93,20 @@ class App extends Component {
   };
 
   getListImages = () => {
-    this.setState({...this.state, loading: true});
-    axios.get(`${config.API_URL}/images`)
-      .then(res => {
-        // console.log(res);
-        
-        this.setState({
-          loading: false,
-          images: res.data.resources,
-        });
-      })
-      .catch(err => console.log(err));
+    try {
+      this.setState({...this.state, loading: true});
+      axios.get(`${config.API_URL}/images`)
+        .then(res => {
+          this.setState({
+            loading: false,
+            images: res.data.resources,
+          });
+        })
+        .catch(err => console.log(err));
+    } catch (error) {
+      console.log(err); 
+    }
+   
       
     
     // fetch(`${config.API_URL}/images`, {
