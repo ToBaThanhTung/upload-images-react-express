@@ -21,7 +21,6 @@ if(process.env.NODE_ENV === 'production') {
   })
 }
 
-app.use(cors());
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -29,15 +28,20 @@ cloudinary.config({
   api_secret: process.env.API_SECRET,
 });
 
+app.use(cors());
+
+
 app.use(formData.parse());
 
 app.get('/init', (req, res) => res.send('ok'));
 
 app.get('/images', (req, res) => {
   try { 
-    const listOfImages =  cloudinary.v2.api.resources({ type: 'upload' }, (err, results) => {
+    console.log('enter get Images');
+    
+    const listOfImages = cloudinary.v2.api.resources({ type: 'upload' }, (err, results) => {
     // console.log('err', err);
-    // console.log('res', results);
+      console.log('res', results);
       if(err) return res.status(400).json(err);
       return res.status(200).json(results);
     });

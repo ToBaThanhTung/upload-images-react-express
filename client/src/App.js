@@ -96,6 +96,8 @@ class App extends Component {
     this.setState({...this.state, loading: true});
     axios.get(`${config.API_URL}/images`)
       .then(res => {
+        // console.log(res);
+        
         this.setState({
           loading: false,
           images: res.data.resources,
@@ -137,7 +139,7 @@ class App extends Component {
     
     const {images, loading} = this.state;
 
-    console.log('state ', this.state);
+    console.log(images.length);
   
     
     const content = () => {
