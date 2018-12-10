@@ -95,6 +95,10 @@ class App extends Component {
     this.setState({...this.state, loading: true});
     fetch(`${config.API_URL}/images`, {
       method: 'GET',
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
     })
     .then(res => res.json())
     .then(images =>{
