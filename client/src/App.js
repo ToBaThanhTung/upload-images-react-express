@@ -23,14 +23,20 @@ class App extends Component {
 
 
   componentDidMount() {
-    fetch(`${config.API_URL}/init`)
+    axios.get(`${config.API_URL}/init`)
       .then(res => {
-        if (res.ok) {
-          return this.setState({ loading: false })  
-        }
-        const msg = 'Something is went wrong with Heroku' 
-        this.toast(msg, 'custom', 2000, toastColor)
+        this.setState({loading: false});
       })
+      .catch(err => console.log(err));
+      
+    // fetch(`${config.API_URL}/init`)
+    //   .then(res => {
+    //     if (res.ok) {
+    //       return this.setState({ loading: false })  
+    //     }
+    //     const msg = 'Something is went wrong with Heroku' 
+    //     this.toast(msg, 'custom', 2000, toastColor)
+    //   })
   }
 
 
@@ -104,7 +110,7 @@ class App extends Component {
         })
         .catch(err => console.log(err));
     } catch (error) {
-      console.log(err); 
+      console.log(error); 
     }
    
       
