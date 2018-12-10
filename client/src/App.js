@@ -3,7 +3,6 @@ import Spinner from './component/Spinner';
 import Images from './component/Images';
 import Button from './component/Button';
 import config from './config';
-import Init from './Init'
 import Notifications, {notify} from 'react-notify-toast';
 import './App.css';
 
@@ -17,8 +16,8 @@ class App extends Component {
 
   state = {
     loading: true,
-    upLoading: false,
     images: [],
+    
   };
 
 
@@ -65,7 +64,7 @@ class App extends Component {
     if(errs.length > 0) {
       return errs.forEach(err => this.toast(err, 'custom', 2000, toastColor));
     }
-    this.setState({upLoading: true});
+    this.setState({loading: true});
 
     console.log(formData);
     
@@ -92,6 +91,26 @@ class App extends Component {
     });
   };
 
+  getListImages = () => {
+    this.setState({...this.state, loading: true});
+    fetch(`${config.API_URL}/images`, {
+      method: 'GET',
+    })
+    .then(res => res.json())
+    .then(images =>{
+      this.setState({
+        loading: false,
+        images: images.resources
+      });
+      // console.log('listImages:', images);
+      
+    })
+    .catch(err => 
+      console.log(err)
+    );
+  };
+  
+
  
   onError = id => {
     this.toast('Oops, something went wrong', 'custom', 2000, toastColor)
@@ -101,20 +120,22 @@ class App extends Component {
 
   render() {
     
-    const {upLoading, images, loading} = this.state;
+    const {images, loading} = this.state;
 
-    console.log('length', images.length);
+    console.log('state ', this.state);
+  
     
     const content = () => {
       switch(true) {
         case loading:
-          return <Init />
-        case upLoading: 
           return <Spinner />
         case images.length > 0:
           return <Images images={images} removeImage={this.removeImage} />
         default: 
-          return <Button onChange={this.onChange} />
+          return <Button 
+            onChange={this.onChange} 
+            getListImages={this.getListImages}
+            />
       }
     }
     return (
