@@ -101,7 +101,7 @@ class App extends Component {
   getListImages = () => {
     try {
       this.setState({...this.state, loading: true});
-      axios.get(`${config.API_URL}/images`)
+      axios.get(`${config.API_URL}/images-getall`)
         .then(res => {
           this.setState({
             loading: false,
