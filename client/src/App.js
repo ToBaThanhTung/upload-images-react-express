@@ -3,6 +3,7 @@ import Spinner from './component/Spinner';
 import Images from './component/Images';
 import Button from './component/Button';
 import config from './config';
+import axios from 'axios';
 import Notifications, {notify} from 'react-notify-toast';
 import './App.css';
 
@@ -93,25 +94,35 @@ class App extends Component {
 
   getListImages = () => {
     this.setState({...this.state, loading: true});
-    fetch(`${config.API_URL}/images`, {
-      method: 'GET',
-      headers : { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
-    })
-    .then(res => res.json())
-    .then(images =>{
-      this.setState({
-        loading: false,
-        images: images.resources
-      });
-      // console.log('listImages:', images);
+    axios.get(`${config.API_URL}/images`)
+      .then(res => {
+        this.setState({
+          loading: false,
+          images: res.data.resources,
+        });
+      })
+      .catch(err => console.log(err));
       
-    })
-    .catch(err => 
-      console.log(err)
-    );
+    
+    // fetch(`${config.API_URL}/images`, {
+    //   method: 'GET',
+    //   headers : { 
+    //     'Content-Type': 'application/json',
+    //     'Accept': 'application/json'
+    //   }
+    // })
+    // .then(res => res.json())
+    // .then(images =>{
+    //   this.setState({
+    //     loading: false,
+    //     images: images.resources
+    //   });
+    //   // console.log('listImages:', images);
+      
+    // })
+    // .catch(err => 
+    //   console.log(err)
+    // );
   };
   
 
