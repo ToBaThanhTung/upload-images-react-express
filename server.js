@@ -37,19 +37,13 @@ app.use(formData.parse());
 app.get('/init', (req, res) => res.send('ok'));
 
 app.get('/images', (req, res) => {
-  try { 
-    console.log('enter get Images');
-    
+ 
     const listOfImages = cloudinary.v2.api.resources({ type: 'upload' }, (err, results) => {
-     console.log('err', err);
+      console.log('err', err);
       console.log('res', results);
       if(err) return res.status(400).json(err);
       return res.status(200).json(results);
     });
-    
-  } catch (error) {
-    if(error) console.log(error);
-  }
  
 });
 
