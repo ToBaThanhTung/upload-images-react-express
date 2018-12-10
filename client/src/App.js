@@ -83,7 +83,7 @@ class App extends Component {
     .then(res => res.json())
     .then(images =>{
       this.setState({
-        upLoading: false,
+        loading: false,
         images
       });
     })
@@ -148,7 +148,8 @@ class App extends Component {
     
     const {images, loading} = this.state;
 
-    console.log(images.length);
+    // console.log(this.state);
+    
   
     
     const content = () => {
