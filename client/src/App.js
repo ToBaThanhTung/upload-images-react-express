@@ -75,21 +75,34 @@ class App extends Component {
 
     console.log(formData);
     
+    axios.post(`${config.API_URL}image-upload`, formData) 
+      .then(res => {
+        console.log(res);
+        this.setState({
+          loading: false,
+          images: res.data,
+        });
+      })
+      .catch(err => console.log(err));
 
-    fetch(`${config.API_URL}/image-upload`, {
-      method: 'POST',
-      body: formData,
-    })
-    .then(res => res.json())
-    .then(images =>{
-      this.setState({
-        loading: false,
-        images
-      });
-    })
-    .catch(err => 
-      console.log(err)
-    );
+    // fetch(`${config.API_URL}image-upload`, {
+    //   method: 'POST',
+    //   body: formData,
+    // })
+    // .then(res => {
+    //   res.json();
+    //   console.log(res);
+      
+    // })
+    // .then(images =>{
+    //   this.setState({
+    //     loading: false,
+    //     images
+    //   });
+    // })
+    // .catch(err => 
+    //   console.log(err)
+    // );
   };
 
   removeImage = (id) => {
@@ -99,20 +112,19 @@ class App extends Component {
   };
 
   getListImages = () => {
-    try {
+
       this.setState({...this.state, loading: true});
-      axios.get(`${config.API_URL}/images-getall`)
+      axios.get(`${config.API_URL}images-getall`)
         .then(res => {
+          console.log(res);
+          
           this.setState({
             loading: false,
             images: res.data.resources,
           });
         })
-        .catch(err => console.log(err));
-    } catch (error) {
-      console.log(error); 
-    }
-   
+        .catch(err => console.log(err)); 
+  }
       
     
     // fetch(`${config.API_URL}/images`, {
@@ -134,7 +146,7 @@ class App extends Component {
     // .catch(err => 
     //   console.log(err)
     // );
-  };
+  
   
 
  

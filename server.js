@@ -33,25 +33,14 @@ cloudinary.config({
 app.use(cors());
 
 
-
+app.disable('etag');
 
 app.use(formData.parse());
 app.use(morgan('dev'));
 app.get('/init', (req, res) => res.send('ok'));
 
-app.get('/images-getall', (req, res) => {
-    console.log('testttttt');
-    
-    cloudinary.v2.api.resources({ type: 'upload' }, (err, results) => {
-      console.log('err', err);
-      console.log('res', results);
-      if(err) return res.status(400).json(err);
-      return res.status(200).json(results);
-    });
-});
 
 app.post('/image-upload', (req, res) => {
-  console.log('testttttttttttt up');
   
   const values = Object.values(req.files);
   
@@ -70,8 +59,18 @@ app.post('/image-upload', (req, res) => {
       res.status(400).json(err)
       
     });
-  
 });
+
+app.get('/images-getall', (req, res) => {
+  console.log('testttttt');
+  
+  cloudinary.v2.api.resources({ type: 'upload' }, (err, results) => {
+    console.log('err', err);
+    console.log('res', results);
+    return res.json(results);
+  });
+});
+
 
 
 
